@@ -1,36 +1,22 @@
 package ru.olegsvs.mtkmacgen;
 
-import android.graphics.Path;
-import android.provider.MediaStore;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.util.Log;
-import java.io.BufferedReader;
 
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
-import java.io.Reader;
-import java.io.Writer;
-import java.math.BigInteger;
 import java.util.Random;
-import java.util.concurrent.Exchanger;
 
 /**
  * Created by olegsvs on 09.05.2017.
  */
 
 public class MacTools {
-    private String resultMACaddress;
+    public static String resultMACaddress;
+
     public boolean setUserMAC(String str) throws Exception {
         str = str.replaceAll("\\:", "");
         writeNewMAC(str);
@@ -105,7 +91,7 @@ public class MacTools {
         return sb.toString();
     }
 
-    public static byte[] getBytesFromFile(File file) throws IOException {
+    private static byte[] getBytesFromFile(File file) throws IOException {
         // Get the size of the file
         long length = file.length();
 
@@ -142,7 +128,7 @@ public class MacTools {
         return bytes;
     }
 
-    public static byte[] hexStringToByteArray(String s) {
+    private static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[(len / 2)];
         for (int i = 0; i < len; i += 2) {
@@ -152,7 +138,7 @@ public class MacTools {
         return data;
     }
 
-    public void writeNewMAC(String str) throws IOException {
+    private void writeNewMAC(String str) throws IOException {
         File fl = new File(MainPage.dataPath);
         RandomAccessFile raf = new RandomAccessFile(fl, "rw");
         try {
@@ -164,7 +150,7 @@ public class MacTools {
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
-    public static String bytesToMAC(byte[] bytes) {
+    private static String bytesToMAC(byte[] bytes) {
         //байты в formatted-MAC
         String tmp , mac;
         char divisionChar = ':';

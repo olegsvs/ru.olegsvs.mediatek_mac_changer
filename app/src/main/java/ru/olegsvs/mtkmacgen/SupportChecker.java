@@ -24,8 +24,8 @@ class SupportChecker {
     public static boolean SUSTATUS = false;
 
     boolean checkDeviceSupport() throws IOException, InterruptedException {
-        suIsGranted();
-        if((Arrays.asList(CPU_SUPPORT_LIST).contains(getFieldFromCpuinfo("Hardware"))) && (suIsGranted())) { isSupported = true; return true; }
+        SUSTATUS = suIsGranted();
+        if((Arrays.asList(CPU_SUPPORT_LIST).contains(getFieldFromCpuinfo("Hardware"))) && (SUSTATUS)) { isSupported = true; return true; }
         // сравниваем поле Hardware с нашим списком процессоров и проверяем root-доступ
         else { isSupported = false; return false; }
     }

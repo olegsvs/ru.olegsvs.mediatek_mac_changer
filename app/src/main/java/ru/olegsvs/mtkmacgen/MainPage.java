@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 public class MainPage extends AppCompatActivity {
@@ -31,27 +30,23 @@ public class MainPage extends AppCompatActivity {
         context = getApplicationContext();
 
         mMacEdit = (EditText) findViewById(R.id.editMACaddress);
-        registerAfterMacTextChangedCallback();
 
         mTools = new MacTools();
         final SupportChecker sc = new SupportChecker();
 
-        Thread t1 = new Thread(new Runnable() {
-            public void run()
-            {
-                try {
-                    if(sc.checkDeviceSupport()) {
-                        Log.i(TAG, "device support : " + sc.isSupported);
-                        testFunc(null);
+        try {
+            if(sc.checkDeviceSupport()) {
+                Log.i(TAG, "device support : " + sc.isSupported);
+                testFunc(null);
 
-                    } else {
-                        notSupportedDialog();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }});
-        t1.start();
+            } else {
+                notSupportedDialog();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        registerAfterMacTextChangedCallback();
     }
 
     public void notSupportedDialog() {
