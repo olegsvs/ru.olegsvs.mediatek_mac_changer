@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
     public Context context;
     EditText mMacEdit;
     public MacTools mTools;
+    public String USER_MAC = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,17 +80,8 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
     }
 
     public void testFunc(View view) throws Exception {
-//        mMacEdit.setText(mTools.getMAC());
         Log.i(MainPage.TAG, "testFunc: get MAC button clicked!");
         WorkerTask workTask = new WorkerTask(GETMAC , this);
-        workTask.delegate = this;
-        workTask.execute();
-//        Log.i(MainPage.TAG, "testFunc: " + workTask.execute().toString());
-    }
-
-    public void testFunc3(View view) throws Exception {
-        Log.i(MainPage.TAG, "testFunc3: set user MAC button clicked!");
-        WorkerTask workTask = new WorkerTask(SETUSERMAC , mMacEdit.getText().toString() , this);
         workTask.delegate = this;
         workTask.execute();
     }
@@ -98,6 +91,35 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
         WorkerTask workTask = new WorkerTask(SETRANDOMMAC , this);
         workTask.delegate = this;
         workTask.execute();
+    }
+
+
+    public void testFunc3(View view) throws Exception {
+        Log.i(MainPage.TAG, "testFunc3: set user MAC button clicked!");
+        WorkerTask workTask = new WorkerTask(SETUSERMAC , mMacEdit.getText().toString() , this);
+        workTask.delegate = this;
+        workTask.execute();
+    }
+
+    public void testFunc4(View view) throws Exception {
+        Log.i(MainPage.TAG, "testFunc4: load and set MAC button clicked!");
+
+        SharedPreferences sharedPref = getSharedPreferences("USER_MAC", Context.MODE_PRIVATE);
+        if (sharedPref.contains("MAC1")) {
+            USER_MAC = sharedPref.getString("MAC1", null);
+        }
+        WorkerTask workTask = new WorkerTask(SETUSERMAC , USER_MAC , this);
+        workTask.delegate = this;
+        workTask.execute();
+    }
+
+    public void testFunc5(View view) throws Exception {
+        Log.i(MainPage.TAG, "testFunc5: save MAC button clicked!");
+
+        SharedPreferences sharedPref = getSharedPreferences("USER_MAC", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("MAC1", mMacEdit.getText().toString());
+        editor.apply();
     }
 
     /**
