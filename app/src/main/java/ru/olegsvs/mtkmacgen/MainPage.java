@@ -22,25 +22,39 @@ import javax.security.auth.login.LoginException;
 
 public class MainPage extends AppCompatActivity {
 
-    public static String TAG = "olegsvs_macgen";
+    public static String TAG = "<<MTKMACGEN :>>";
+    public static String dataPath;
     public Context context;
     public EditText mMacEdit;
-
+//    public static String DD_FILE_PATH;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
+        dataPath = new StringBuilder(String.valueOf(getBaseContext().getFilesDir().getAbsolutePath())).append("/WIFI").toString();
         context = getApplicationContext();
         mMacEdit = (EditText) findViewById(R.id.editMACaddress);
         registerAfterMacTextChangedCallback();
+
+
     }
 
-    public void testFunc(View view) throws IOException, InterruptedException {
+    public void testFunc(View view) throws Exception {
         SupportChecker sc = new SupportChecker();
         sc.checkDeviceSupport();
         Log.i("device support : ", "testFunc: " + sc.isSupported);
         Log.i("extract assets : ", "testFunc: " + extract_dd_binary());
+        MacTools mc = new MacTools();
+        mc.getMAC();
+
+    }
+
+    public void testFunc2(View view) throws Exception {
+        MacTools mc2 = new MacTools();
+        mMacEdit.setText(mc2.randomMACAddress());
+        mc2.setUserMAC(mMacEdit.getText().toString());
+        mc2.getMAC();
     }
 
     public boolean extract_dd_binary() {
@@ -48,6 +62,7 @@ public class MainPage extends AppCompatActivity {
         {
             InputStream stream = this.getAssets().open("dd");
             OutputStream output = new BufferedOutputStream(new FileOutputStream(this.getFilesDir() + "/dd"));
+
 
             byte data[] = new byte[1024];
             int count;
@@ -66,9 +81,11 @@ public class MainPage extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-        File testFile = new File(this.getFilesDir() + "/dd");
-        Log.i(MainPage.TAG, "extract_dd_binary: " + testFile.exists());
-        return testFile.exists();
+//        DD_FILE_PATH = this.getFilesDir() + "/dd";
+//        File testFile = new File(DD_FILE_PATH);
+//        Log.i(MainPage.TAG, "extract_dd_binary: " + testFile.exists());
+//        return testFile.exists();
+        return false;
     }
 
     /**
