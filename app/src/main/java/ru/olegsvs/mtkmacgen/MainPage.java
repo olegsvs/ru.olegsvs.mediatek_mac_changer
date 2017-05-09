@@ -2,6 +2,8 @@ package ru.olegsvs.mtkmacgen;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,15 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import javax.security.auth.login.LoginException;
-
+import java.util.Arrays;
 
 public class MainPage extends AppCompatActivity {
 
@@ -26,7 +21,7 @@ public class MainPage extends AppCompatActivity {
     public static String dataPath;
     public Context context;
     public EditText mMacEdit;
-//    public static String DD_FILE_PATH;
+    public MacTools mTools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,58 +29,66 @@ public class MainPage extends AppCompatActivity {
 
         dataPath = new StringBuilder(String.valueOf(getBaseContext().getFilesDir().getAbsolutePath())).append("/WIFI").toString();
         context = getApplicationContext();
+
         mMacEdit = (EditText) findViewById(R.id.editMACaddress);
         registerAfterMacTextChangedCallback();
 
+        mTools = new MacTools();
+        final SupportChecker sc = new SupportChecker();
 
+        Thread t1 = new Thread(new Runnable() {
+            public void run()
+            {
+                try {
+                    if(sc.checkDeviceSupport()) {
+                        Log.i(TAG, "device support : " + sc.isSupported);
+                        testFunc(null);
+
+                    } else {
+                        notSupportedDialog();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }});
+        t1.start();
+    }
+
+    public void notSupportedDialog() {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                String msg = null;
+                if(SupportChecker.SUSTATUS) msg = "Your CPU is " + SupportChecker.CPU + "\nSupported CPU : " + Arrays.asList(SupportChecker.CPU_SUPPORT_LIST).toString();
+                else msg = "ROOT not granted!";
+
+                new AlertDialog.Builder(MainPage.this)
+                        .setTitle("Your Device not supported")
+                        .setMessage(msg)
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                Log.i(MainPage.TAG, "onClick: device_not_supported_exit");
+                                System.exit(0);
+                            }
+                        }).show();
+            }
+        });
     }
 
     public void testFunc(View view) throws Exception {
-        SupportChecker sc = new SupportChecker();
-        sc.checkDeviceSupport();
-        Log.i("device support : ", "testFunc: " + sc.isSupported);
-        Log.i("extract assets : ", "testFunc: " + extract_dd_binary());
-        MacTools mc = new MacTools();
-        mc.getMAC();
+        mMacEdit.setText(mTools.getMAC());
+    }
 
+    public void testFunc3(View view) throws Exception {
+        Log.i(MainPage.TAG, "testFunc3: set user MAC button clicked!");
+        mTools.setUserMAC(mMacEdit.getText().toString());
     }
 
     public void testFunc2(View view) throws Exception {
-        MacTools mc2 = new MacTools();
-        mMacEdit.setText(mc2.randomMACAddress());
-        mc2.setUserMAC(mMacEdit.getText().toString());
-        mc2.getMAC();
-    }
-
-    public boolean extract_dd_binary() {
-        try
-        {
-            InputStream stream = this.getAssets().open("dd");
-            OutputStream output = new BufferedOutputStream(new FileOutputStream(this.getFilesDir() + "/dd"));
-
-
-            byte data[] = new byte[1024];
-            int count;
-
-            while((count = stream.read(data)) != -1)
-            {
-                output.write(data, 0, count);
-            }
-
-            output.flush();
-            output.close();
-            stream.close();
-
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-//        DD_FILE_PATH = this.getFilesDir() + "/dd";
-//        File testFile = new File(DD_FILE_PATH);
-//        Log.i(MainPage.TAG, "extract_dd_binary: " + testFile.exists());
-//        return testFile.exists();
-        return false;
+        Log.i(MainPage.TAG, "testFunc2: set random MAC button clicked!");
+        mMacEdit.setText(mTools.randomMACAddress());
+        mTools.setUserMAC(mMacEdit.getText().toString());
     }
 
     /**

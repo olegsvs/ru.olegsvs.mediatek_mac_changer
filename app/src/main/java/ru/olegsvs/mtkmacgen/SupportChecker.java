@@ -19,9 +19,12 @@ import java.util.regex.Pattern;
 class SupportChecker {
 
     boolean isSupported = false;
-    private final String[] CPU_SUPPORT_LIST = {"MT6735P" , "MT6735M"}; // cat /proc/cpuinfo | grep Hardware
+    public static final String[] CPU_SUPPORT_LIST = {"MT6735P" , "MT6735M"}; // cat /proc/cpuinfo | grep Hardware
+    public static String CPU = null;
+    public static boolean SUSTATUS = false;
 
     boolean checkDeviceSupport() throws IOException, InterruptedException {
+        suIsGranted();
         if((Arrays.asList(CPU_SUPPORT_LIST).contains(getFieldFromCpuinfo("Hardware"))) && (suIsGranted())) { isSupported = true; return true; }
         // сравниваем поле Hardware с нашим списком процессоров и проверяем root-доступ
         else { isSupported = false; return false; }
@@ -38,6 +41,7 @@ class SupportChecker {
         if (tempFile.exists()) {
             Runtime.getRuntime().exec(new String[]{"su", "-c", "rm /data/data/tempFile"});
             Log.i(MainPage.TAG, "suIsGranted: root granted! delete tempFile");
+            SUSTATUS = true;
             return true;
         }
         return false;
@@ -51,6 +55,7 @@ class SupportChecker {
             while ((line = br.readLine()) != null) {
                 Matcher m = p.matcher(line);
                 if (m.matches()) {
+                    CPU = m.group(1);
                     return m.group(1);
                 }
             }

@@ -6,28 +6,19 @@
     android:layout_height="match_parent"
     tools:context="ru.olegsvs.mtkmacgen.MainPage">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/textView"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.716"
-        app:layout_constraintBottom_toTopOf="@+id/buttonMain"
-        app:layout_constraintHorizontal_bias="0.48" />
-
     <Button
         android:id="@+id/buttonMain"
         android:onClick="testFunc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ClickME!"
-        tools:layout_editor_absoluteX="148dp"
-        android:layout_marginBottom="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/editMACaddress" />
+        android:layout_width="121dp"
+        android:layout_height="47dp"
+        android:text="GET_MAC"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button" />
 
     <EditText
         android:id="@+id/editMACaddress"
@@ -36,15 +27,42 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        tools:layout_editor_absoluteX="85dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintHorizontal_bias="0.503"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonMain" />
 
     <Button
         android:id="@+id/button"
         android:onClick="testFunc2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="RANDOM_MAC"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        android:layout_marginBottom="162dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="120dp"
+        android:layout_height="47dp"
+        android:onClick="testFunc3"
+        android:text="SET_MAC"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        tools:layout_editor_absoluteY="358dp" />
 
 </android.support.constraint.ConstraintLayout>
