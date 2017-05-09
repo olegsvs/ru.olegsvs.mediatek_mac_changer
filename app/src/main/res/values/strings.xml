@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Mediatek MAC generator</string>
+    <string name="GET_MAC_BUTTON">Get MAC value</string>
+    <string name="SET_MAC_BUTTON">Set MAC value from EditText</string>
+    <string name="SET_RND_BUTTON">Set random MAC value</string>
+    <string name="SAVE_MAC_BUTTON">Save to prefs MAC value</string>
+    <string name="LOAD_MAC_BUTTON">Load and set MAC value</string>
 </resources>

@@ -45,7 +45,7 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
         try {
             if(sc.checkDeviceSupport()) {
                 Log.i(TAG, "device support : " + sc.isSupported);
-                testFunc(null);
+                GET_MAC_BUTTON(null);
 
             } else {
                 notSupportedDialog();
@@ -79,30 +79,30 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
         });
     }
 
-    public void testFunc(View view) throws Exception {
-        Log.i(MainPage.TAG, "testFunc: get MAC button clicked!");
+    public void GET_MAC_BUTTON(View view) throws Exception {
+        Log.i(MainPage.TAG, "GET_MAC_BUTTON: get MAC button clicked!");
         WorkerTask workTask = new WorkerTask(GETMAC , this);
         workTask.delegate = this;
         workTask.execute();
     }
 
-    public void testFunc2(View view) throws Exception {
-        Log.i(MainPage.TAG, "testFunc2: set random MAC button clicked!");
+    public void SET_RND_BUTTON(View view) throws Exception {
+        Log.i(MainPage.TAG, "SET_RND_BUTTON: set random MAC button clicked!");
         WorkerTask workTask = new WorkerTask(SETRANDOMMAC , this);
         workTask.delegate = this;
         workTask.execute();
     }
 
 
-    public void testFunc3(View view) throws Exception {
-        Log.i(MainPage.TAG, "testFunc3: set user MAC button clicked!");
+    public void SET_MAC_BUTTON(View view) throws Exception {
+        Log.i(MainPage.TAG, "SET_MAC_BUTTON: set user MAC button clicked!");
         WorkerTask workTask = new WorkerTask(SETUSERMAC , mMacEdit.getText().toString() , this);
         workTask.delegate = this;
         workTask.execute();
     }
 
-    public void testFunc4(View view) throws Exception {
-        Log.i(MainPage.TAG, "testFunc4: load and set MAC button clicked!");
+    public void LOAD_MAC_BUTTON(View view) throws Exception {
+        Log.i(MainPage.TAG, "LOAD_MAC_BUTTON: load and set MAC button clicked!");
 
         SharedPreferences sharedPref = getSharedPreferences("USER_MAC", Context.MODE_PRIVATE);
         if (sharedPref.contains("MAC1")) {
@@ -113,8 +113,8 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
         workTask.execute();
     }
 
-    public void testFunc5(View view) throws Exception {
-        Log.i(MainPage.TAG, "testFunc5: save MAC button clicked!");
+    public void SAVE_MAC_BUTTON(View view) throws Exception {
+        Log.i(MainPage.TAG, "SAVE_MAC_BUTTON: save MAC button clicked!");
 
         SharedPreferences sharedPref = getSharedPreferences("USER_MAC", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();

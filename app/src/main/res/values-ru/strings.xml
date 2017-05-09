@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mediatek MAC generator</string>
+    <string name="GET_MAC_BUTTON">Узнать значение MAC адреса</string>
+    <string name="SET_MAC_BUTTON">Установить значением MAC адреса из EditText</string>
+    <string name="SET_RND_BUTTON">Установить случайный MAC адрес</string>
+    <string name="SAVE_MAC_BUTTON">Сохранить MAC адрес</string>
+    <string name="LOAD_MAC_BUTTON">Загрузить и установить MAC адрес</string>
+</resources>
