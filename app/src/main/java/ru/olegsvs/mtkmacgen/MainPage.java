@@ -1,8 +1,10 @@
 package ru.olegsvs.mtkmacgen;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,15 +13,19 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
-public class MainPage extends AppCompatActivity {
+public class MainPage extends AppCompatActivity implements WorkerTask.AsyncResponse {
 
+    final static int GETMAC = 1;
+    final static int SETRANDOMMAC = 2;
+    final static int SETUSERMAC = 3;
     public static String TAG = "<<MTKMACGEN :>>";
     public static String dataPath;
     public Context context;
-    public EditText mMacEdit;
+    EditText mMacEdit;
     public MacTools mTools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,18 +78,26 @@ public class MainPage extends AppCompatActivity {
     }
 
     public void testFunc(View view) throws Exception {
-        mMacEdit.setText(mTools.getMAC());
+//        mMacEdit.setText(mTools.getMAC());
+        Log.i(MainPage.TAG, "testFunc: get MAC button clicked!");
+        WorkerTask workTask = new WorkerTask(GETMAC , this);
+        workTask.delegate = this;
+        workTask.execute();
+//        Log.i(MainPage.TAG, "testFunc: " + workTask.execute().toString());
     }
 
     public void testFunc3(View view) throws Exception {
         Log.i(MainPage.TAG, "testFunc3: set user MAC button clicked!");
-        mTools.setUserMAC(mMacEdit.getText().toString());
+        WorkerTask workTask = new WorkerTask(SETUSERMAC , mMacEdit.getText().toString() , this);
+        workTask.delegate = this;
+        workTask.execute();
     }
 
     public void testFunc2(View view) throws Exception {
         Log.i(MainPage.TAG, "testFunc2: set random MAC button clicked!");
-        mMacEdit.setText(mTools.randomMACAddress());
-        mTools.setUserMAC(mMacEdit.getText().toString());
+        WorkerTask workTask = new WorkerTask(SETRANDOMMAC , this);
+        workTask.delegate = this;
+        workTask.execute();
     }
 
     /**
@@ -215,5 +229,13 @@ public class MainPage extends AppCompatActivity {
                 mMacEdit.addTextChangedListener(this);
             }
         });
+    }
+
+    @Override
+    public void processFinish(String output){
+        if (output != null) {
+            mMacEdit.setText(output);
+        }
+
     }
 }

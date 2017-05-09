@@ -18,7 +18,9 @@ public class MacTools {
     public static String resultMACaddress;
 
     public boolean setUserMAC(String str) throws Exception {
+        String tmp  = str;
         str = str.replaceAll("\\:", "");
+
         writeNewMAC(str);
         Process process = Runtime.getRuntime().exec("su"); //Generic SU Command
         DataOutputStream os = new DataOutputStream(process.getOutputStream());
@@ -41,9 +43,10 @@ public class MacTools {
         //устанавливаем пользовательский MAC-адрес
         Log.i(MainPage.TAG, "setUserMAC: " + str.toString());
         Log.i(MainPage.TAG, "setUserMAC: getMAC :  " + getMAC());
-//        if(getMAC().equals(str))
+        Log.i(MainPage.TAG, "setUserMAC: resultMACaddress.equalsIgnoreCase(tmp) : " + resultMACaddress.equalsIgnoreCase(tmp));
+        if(resultMACaddress.equalsIgnoreCase(tmp))
         return true;
-//        else return false;
+        else return false;
     }
 
     public String getMAC() throws Exception {
