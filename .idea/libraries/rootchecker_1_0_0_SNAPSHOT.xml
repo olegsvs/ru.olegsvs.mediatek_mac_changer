@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="rootchecker-1.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.orhanobut/rootchecker/1.0.0-SNAPSHOT/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.orhanobut/rootchecker/1.0.0-SNAPSHOT/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.orhanobut/rootchecker/1.0.0-SNAPSHOT/54d701cd3f00af0334c0e467d51c7ab730e16c22/rootchecker-1.0.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
