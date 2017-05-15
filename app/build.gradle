@@ -3,13 +3,22 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    def Properties versionProps = new Properties()
+    def versionPropsFile = file('version.properties')
+    if(versionPropsFile.exists())
+        versionProps.load(new FileInputStream(versionPropsFile))
+    def code = (versionProps['VERSION_CODE'] ?: "0").toInteger() + 1
+    versionProps['VERSION_CODE'] = code.toString()
+    versionProps.store(versionPropsFile.newWriter(), null)
+
     defaultConfig {
         applicationId "ru.olegsvs.mtkmacgen"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.1"
+        versionCode code
+        versionName "1.1." + code
     }
+
     buildTypes {
         release {
             minifyEnabled true

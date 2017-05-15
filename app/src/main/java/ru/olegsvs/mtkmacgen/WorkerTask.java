@@ -82,7 +82,14 @@ public class WorkerTask extends AsyncTask<Void, Void, String>
             case MainPage.GETMAC :
                 try {
                     Log.i(MainPage.TAG, "doInBackground: getMAC operation");
-                    return mTools.getMAC();
+                    mTools.getMAC();
+                    if(mTools.backupIsSuccess) {
+                        return mTools.getMAC();
+                    }
+                    else {
+                        Log.e(MainPage.TAG, "restoreMAC: BACKUP NOT SUCCESS!");
+                        return "BNS";
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -147,6 +154,7 @@ public class WorkerTask extends AsyncTask<Void, Void, String>
         if(result != null && result!="ERROR") delegate.processFinish(result);
         if(result != null && result=="ERROR") Toast.makeText(ctx,"ERROR!", Toast.LENGTH_LONG).show();
         if(result != null && result=="BNF") Toast.makeText(ctx,"BACKUP NOT FOUND!", Toast.LENGTH_LONG).show();
+        if(result != null && result=="BNS") Toast.makeText(ctx,"error backup wifi!", Toast.LENGTH_LONG).show();
     }
 
 }

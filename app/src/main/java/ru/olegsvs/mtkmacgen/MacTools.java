@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class MacTools {
     public static String resultMACaddress;
-
+    public boolean backupIsSuccess = false;
     public boolean setUserMAC(String str) throws Exception {
         String tmp  = str;
         str = str.replaceAll("\\:", "");
@@ -72,10 +72,11 @@ public class MacTools {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            return !isFirstLaunch();
+            return backupIsSuccess = !isFirstLaunch();
         }
         else {
             Log.i(MainPage.TAG, "backupMAC: isNotFirstLaunch!");
+            backupIsSuccess = true;
             return true;
         }
     }

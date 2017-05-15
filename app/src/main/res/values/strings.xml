@@ -10,4 +10,5 @@
     <string name="YOUR_CPU">Your CPU is :</string>
     <string name="CPU_NOT_SUPP">Supported CPU : </string>
     <string name="DEVICE_NOT_SUPP">Your device not supported!</string>
+    <string name="BACKUP_NOT_SUCCESS">Error on backup wifi!</string>
 </resources>

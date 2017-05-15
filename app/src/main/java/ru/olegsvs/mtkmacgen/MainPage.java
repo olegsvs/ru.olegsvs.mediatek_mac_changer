@@ -53,7 +53,6 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
             if(sc.checkDeviceSupport()) {
                 Log.i(TAG, "device support : " + sc.isSupported);
                 GET_MAC_BUTTON(null);
-
             } else {
                 notSupportedDialog();
             }
@@ -269,8 +268,14 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
 
     @Override
     public void processFinish(String output){
-        if ((output != null) && (output != "BNF")) {
+        if ((output != null) && (output != "BNF") && (output != "BNS")) {
             mMacEdit.setText(output);
+            Log.i(TAG, "processFinish: " + output);
+        }
+        if (output == "BNS") {
+            notSupportedDialog();
+            Toast.makeText(this,getText(R.string.BACKUP_NOT_SUCCESS),Toast.LENGTH_LONG).show();
+            Log.e(TAG, "processFinish: backup not success!");
         }
 
     }

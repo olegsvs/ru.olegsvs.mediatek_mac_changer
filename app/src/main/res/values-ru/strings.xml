@@ -11,4 +11,5 @@
     <string name="CPU_NOT_SUPP">Поддерживаемые процессоры : </string>
     <string name="LOAD_MAC_BUTTON">Загрузить и установить MAC адрес</string>
     <string name="DEVICE_NOT_SUPP">Ваше устройство не поддерживается!</string>
+    <string name="BACKUP_NOT_SUCCESS">Ошибка при бэкапе wifi!</string>
 </resources>
