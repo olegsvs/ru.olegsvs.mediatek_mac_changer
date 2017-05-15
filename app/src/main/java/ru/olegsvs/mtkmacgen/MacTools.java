@@ -1,7 +1,6 @@
 package ru.olegsvs.mtkmacgen;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -73,7 +72,7 @@ public class MacTools {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            return isFirstLaunch();
+            return !isFirstLaunch();
         }
         else {
             Log.i(MainPage.TAG, "backupMAC: isNotFirstLaunch!");

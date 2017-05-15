@@ -134,7 +134,6 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
         WorkerTask workTask = new WorkerTask(RESTOREUSERMAC ,  this);
         workTask.delegate = this;
         workTask.execute();
-//        GET_MAC_BUTTON(null);
     }
 
     /**
