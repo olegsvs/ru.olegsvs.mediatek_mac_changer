@@ -4,5 +4,9 @@
     <string name="SET_MAC_BUTTON">Set MAC value from EditText</string>
     <string name="SET_RND_BUTTON">Set random MAC value</string>
     <string name="SAVE_MAC_BUTTON">Save to prefs MAC value</string>
+    <string name="ROOT_FALSE">ROOT not GRANTED!!</string>
     <string name="LOAD_MAC_BUTTON">Load and set MAC value</string>
+    <string name="YOUR_CPU">Your CPU is :</string>
+    <string name="CPU_NOT_SUPP">Supported CPU : </string>
+    <string name="DEVICE_NOT_SUPP">Your device not supported!</string>
 </resources>

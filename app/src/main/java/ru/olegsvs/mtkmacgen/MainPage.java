@@ -33,6 +33,12 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+        try {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+        } catch (NullPointerException e) {
+            Log.e(TAG, "onCreate: setDisplayShowHomeEnabled " +e.toString());
+        }
 
         dataPath = new StringBuilder(String.valueOf(getBaseContext().getFilesDir().getAbsolutePath())).append("/WIFI").toString();
         context = getApplicationContext();
@@ -61,11 +67,11 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
         this.runOnUiThread(new Runnable() {
             public void run() {
                 String msg = null;
-                if(SupportChecker.SUSTATUS) msg = "Your CPU is " + SupportChecker.CPU + "\nSupported CPU : " + Arrays.asList(SupportChecker.CPU_SUPPORT_LIST).toString();
-                else msg = "ROOT not granted!";
+                if(SupportChecker.SUSTATUS) msg = getText(R.string.YOUR_CPU) + SupportChecker.CPU + "\n" + getText(R.string.CPU_NOT_SUPP) + Arrays.asList(SupportChecker.CPU_SUPPORT_LIST).toString();
+                else msg = getText(R.string.ROOT_FALSE).toString();
 
                 new AlertDialog.Builder(MainPage.this)
-                        .setTitle("Your Device not supported")
+                        .setTitle(getText(R.string.DEVICE_NOT_SUPP))
                         .setMessage(msg)
                         .setCancelable(false)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
