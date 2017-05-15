@@ -12,4 +12,5 @@
     <string name="LOAD_MAC_BUTTON">Загрузить и установить MAC адрес</string>
     <string name="DEVICE_NOT_SUPP">Ваше устройство не поддерживается!</string>
     <string name="BACKUP_NOT_SUCCESS">Ошибка при бэкапе wifi!</string>
+    <string name="NOT_SAVED_MAC">Не найденно сохранненных MAC!</string>
 </resources>

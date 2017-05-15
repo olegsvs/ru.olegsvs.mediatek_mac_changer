@@ -11,4 +11,5 @@
     <string name="CPU_NOT_SUPP">Supported CPU : </string>
     <string name="DEVICE_NOT_SUPP">Your device not supported!</string>
     <string name="BACKUP_NOT_SUCCESS">Error on backup wifi!</string>
+    <string name="NOT_SAVED_MAC">Not found saved MAC!</string>
 </resources>

@@ -113,10 +113,10 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
         SharedPreferences sharedPref = getSharedPreferences("USER_MAC", Context.MODE_PRIVATE);
         if (sharedPref.contains("MAC1")) {
             USER_MAC = sharedPref.getString("MAC1", null);
-        }
-        WorkerTask workTask = new WorkerTask(SETUSERMAC , USER_MAC , this);
-        workTask.delegate = this;
-        workTask.execute();
+            WorkerTask workTask = new WorkerTask(SETUSERMAC , USER_MAC , this);
+            workTask.delegate = this;
+            workTask.execute();
+        } else Toast.makeText(this,getText(R.string.NOT_SAVED_MAC),Toast.LENGTH_SHORT).show();
     }
 
     public void SAVE_MAC_BUTTON(View view) throws Exception {
