@@ -23,6 +23,7 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
     final static int GETMAC = 1;
     final static int SETRANDOMMAC = 2;
     final static int SETUSERMAC = 3;
+    final static int RESTOREUSERMAC = 4;
     public static String TAG = "<<MTKMACGEN :>>";
     public static String dataPath;
     public Context context;
@@ -126,6 +127,14 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("MAC1", mMacEdit.getText().toString());
         editor.apply();
+    }
+
+    public void RESTORE_MAC_BUTTON(View view) throws Exception {
+        Log.i(MainPage.TAG, "RESTORE_MAC_BUTTON: restore MAC button clicked!");
+        WorkerTask workTask = new WorkerTask(RESTOREUSERMAC ,  this);
+        workTask.delegate = this;
+        workTask.execute();
+//        GET_MAC_BUTTON(null);
     }
 
     /**
@@ -261,7 +270,7 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
 
     @Override
     public void processFinish(String output){
-        if (output != null) {
+        if ((output != null) && (output != "BNF")) {
             mMacEdit.setText(output);
         }
 

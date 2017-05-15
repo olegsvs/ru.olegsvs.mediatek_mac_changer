@@ -5,6 +5,7 @@
     <string name="SET_MAC_BUTTON">Установить значением MAC адреса из EditText</string>
     <string name="SET_RND_BUTTON">Установить случайный MAC адрес</string>
     <string name="SAVE_MAC_BUTTON">Сохранить MAC адрес</string>
+    <string name="RESTORE_MAC_BUTTON">Восстановить изначальный MAC адрес</string>
     <string name="ROOT_FALSE">ROOT-права не предоставленны!</string>
     <string name="YOUR_CPU">Ваш процессор :</string>
     <string name="CPU_NOT_SUPP">Поддерживаемые процессоры : </string>

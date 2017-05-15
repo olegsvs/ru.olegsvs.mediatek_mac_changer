@@ -1,6 +1,7 @@
 package ru.olegsvs.mtkmacgen;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -49,7 +50,66 @@ public class MacTools {
         else return false;
     }
 
+    private boolean isFirstLaunch() {
+        File fFile = new File(MainPage.dataPath + "backup");
+        if(fFile.exists()) return false;
+        return true;
+    }
+
+    private boolean backupMAC() throws IOException {
+        if(isFirstLaunch()) {
+            Log.i(MainPage.TAG, "backupMAC: isFirstLaunch!");
+            Log.i(MainPage.TAG, "backupMAC: backingUp MAC address!");
+            Process process = Runtime.getRuntime().exec("su"); //Generic SU Command
+            DataOutputStream os = new DataOutputStream(process.getOutputStream());
+            os.writeBytes("cp -rf  /data/nvram/APCFG/APRDEB/WIFI " + MainPage.dataPath + "backup\n");
+            os.writeBytes("chmod 777 " + MainPage.dataPath  + "backup\n");
+            os.writeBytes("exit\n");
+            os.flush();
+            os.close();
+            try {
+                process.waitFor();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return isFirstLaunch();
+        }
+        else {
+            Log.i(MainPage.TAG, "backupMAC: isNotFirstLaunch!");
+            return true;
+        }
+    }
+
+    public boolean restoreMAC() throws Exception {
+        if(!isFirstLaunch()) {
+            Log.i(MainPage.TAG, "restoreMAC: restoring backup");
+            Process process = Runtime.getRuntime().exec("su"); //Generic SU Command
+            DataOutputStream os = new DataOutputStream(process.getOutputStream());
+            os.writeBytes("svc wifi disable\n");
+            Log.i(MainPage.TAG, "restoreMAC: DISABLING WIFI SERVISE is STARTED");
+            os.writeBytes("cp -rf  " + MainPage.dataPath + "backup /data/nvram/APCFG/APRDEB/WIFI\n");
+            os.writeBytes("chmod 777 /data/nvram/APCFG/APRDEB/WIFI\n");
+            Log.i(MainPage.TAG, "restoreMAC: rewrite WIFI in nvram");
+            os.writeBytes("svc wifi enable\n");
+            Log.i(MainPage.TAG, "restoreMAC: ENABLE WIFI");
+            os.writeBytes("exit\n");
+            os.flush();
+            os.close();
+            try {
+                process.waitFor();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return true;
+        } else return false;
+    }
+
     public String getMAC() throws Exception {
+        if(backupMAC()) Log.i(MainPage.TAG, "getMAC: backup create success!");
+        else Log.e(MainPage.TAG, "getMAC: buckup create not success!");
+
         Process process = Runtime.getRuntime().exec("su"); //Generic SU Command
         DataOutputStream os = new DataOutputStream(process.getOutputStream());
         os.writeBytes("cp -rf  /data/nvram/APCFG/APRDEB/WIFI " + MainPage.dataPath + "\n");

@@ -49,15 +49,19 @@ public class WorkerTask extends AsyncTask<Void, Void, String>
         switch(operation) {
             case MainPage.GETMAC:
                 Log.i(MainPage.TAG, "onPreExecute: MainPage.GETMAC ");
-                p.setMessage("Get MAC address");
+                p.setMessage("Getting MAC address");
                 break;
             case MainPage.SETRANDOMMAC:
                 Log.i(MainPage.TAG, "onPreExecute: MainPage.SETRANDOMMAC ");
-                p.setMessage("Get RANDOM MAC address");
+                p.setMessage("Setting UP RANDOM MAC address");
                 break;
             case MainPage.SETUSERMAC:
                 Log.i(MainPage.TAG, "onPreExecute: MainPage.SETUSERMAC " + this.MAC);
-                p.setMessage("Set CUSTOM MAC address!");
+                p.setMessage("Setting UP CUSTOM MAC address!");
+                break;
+            case MainPage.RESTOREUSERMAC:
+                Log.i(MainPage.TAG, "onPreExecute: MainPage.RESTOREUSERMAC!");
+                p.setMessage("Restoring MAC address!");
                 break;
         }
         super.onPreExecute();
@@ -114,6 +118,21 @@ public class WorkerTask extends AsyncTask<Void, Void, String>
                     e.printStackTrace();
                 }
                 break;
+            case MainPage.RESTOREUSERMAC :
+                Log.i(MainPage.TAG, "doInBackground: RESTOREUSERMAC operation");
+                try {
+                    if(mTools.restoreMAC()) {
+                        Log.i(MainPage.TAG, "doInBackground: SUCCESS mTools.restoreMAC();");
+                        return mTools.getMAC();
+                    }
+                    else {
+                        Log.e(MainPage.TAG, "restoreMAC: BACKUP NOT FOUND");
+                        return "BNF";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
         }
         return null;
     }
@@ -125,12 +144,9 @@ public class WorkerTask extends AsyncTask<Void, Void, String>
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         p.dismiss();
-        if(result != null && result!="ERROR")
-        {
-            delegate.processFinish(result);
-        } else if(result != null && result=="ERROR") {
-            Toast.makeText(ctx,"Произошла ошибка!", Toast.LENGTH_LONG).show();
-        }
+        if(result != null && result!="ERROR") delegate.processFinish(result);
+        if(result != null && result=="ERROR") Toast.makeText(ctx,"ERROR!", Toast.LENGTH_LONG).show();
+        if(result != null && result=="BNF") Toast.makeText(ctx,"BACKUP NOT FOUND!", Toast.LENGTH_LONG).show();
     }
 
 }
