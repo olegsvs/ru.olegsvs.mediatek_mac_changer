@@ -17,6 +17,7 @@ android {
         targetSdkVersion 25
         versionCode code
         versionName "1.1." + code
+        setProperty("archivesBaseName", "ru.olegsvs.mtkmacgen-$versionName")
     }
 
     buildTypes {
