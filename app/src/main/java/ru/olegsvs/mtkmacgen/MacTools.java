@@ -14,7 +14,7 @@ import java.util.Random;
  * Created by olegsvs on 09.05.2017.
  */
 
-public class MacTools {
+public class MacTools { //TODO check MAC from WifiManager android and compare with getMAC() method
     public static String resultMACaddress;
     public boolean backupIsSuccess = false;
     public boolean setUserMAC(String str) throws Exception {
