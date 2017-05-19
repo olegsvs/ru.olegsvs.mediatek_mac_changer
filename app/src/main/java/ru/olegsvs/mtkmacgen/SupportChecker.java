@@ -23,7 +23,7 @@ class SupportChecker {
             "MT6735P" , "MT6735M" , "MT6577" , "MT6577T" , "MT6572" ,
             "MT6572M" , "MT6582" , "MT6582M" , "MT6753" , "MT6753P" ,
             "MT6753M" , "MT6795" , "MT6797" , "MT6737P" , "MT6737M" ,
-            "MT6737" , "MT6737T"}; // cat /proc/cpuinfo | grep Hardware
+            "MT6737" , "MT6737T", "MT6589"}; // cat /proc/cpuinfo | grep Hardware
     public static String CPU = null;
     public static boolean SUSTATUS = false;
 
