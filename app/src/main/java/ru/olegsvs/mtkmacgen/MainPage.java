@@ -1,14 +1,12 @@
 package ru.olegsvs.mtkmacgen;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -41,7 +39,7 @@ public class MainPage extends AppCompatActivity implements WorkerTask.AsyncRespo
             Log.e(TAG, "onCreate: setDisplayShowHomeEnabled " +e.toString());
         }
 
-        dataPath = new StringBuilder(String.valueOf(getBaseContext().getFilesDir().getAbsolutePath())).append("/WIFI").toString();
+        dataPath = "/data/data/ru.olegsvs.mtkmacgen/files/WIFI";
         context = getApplicationContext();
 
         mMacEdit = (EditText) findViewById(R.id.editMACaddress);
